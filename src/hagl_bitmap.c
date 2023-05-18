@@ -247,4 +247,5 @@ hagl_bitmap_init(hagl_bitmap_t *bitmap, int16_t width, uint16_t height, uint8_t 
     bitmap->vline = vline;
     bitmap->blit = blit;
     bitmap->scale_blit = scale_blit;
+    
 }

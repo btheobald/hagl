@@ -118,12 +118,16 @@ hagl_fill_rectangle_xyxy(void const *_surface, int16_t x0, int16_t y0, int16_t x
     uint16_t width = x1 - x0 + 1;
     uint16_t height = y1 - y0 + 1;
 
-    for (uint16_t i = 0; i < height; i++) {
-        if (surface->hline) {
-            /* Already clipped so can call HAL directly. */
-            surface->hline(&surface, x0, y0 + i, width, color);
-        } else {
-            hagl_draw_hline(surface, x0, y0 + i, width, color);
+    if (surface->rectangle) {
+        surface->rectangle(&surface, x0, y0, width, height, color);
+    } else {
+        for (uint16_t i = 0; i < height; i++) {
+            if (surface->hline) {
+                /* Already clipped so can call HAL directly. */
+                surface->hline(&surface, x0, y0 + i, width, color);
+            } else {
+                hagl_draw_hline(surface, x0, y0 + i, width, color);
+            }
         }
     }
 }
